@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurants', function (Blueprint $table) {
+        Schema::create('table_spaces', function (Blueprint $table) {
             $table->id();
-            $table->String("name");
-            $table->String("description", 1000)->nullable();
-            $table->string('restaurant_photo')->nullable();
-            $table->unsignedBigInteger('location_id');
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->unsignedBigInteger('restaurant_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('location_id')->references('id')->on('locations');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('table_spaces');
     }
 };

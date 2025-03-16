@@ -24,7 +24,7 @@ class LocationController extends Controller
             'areaCode' => 'required'
         ]);
 
-        $location = new Location;
+        $location = new Location();
         $location->name = $request->name;
         $location->areaCode = $request->areaCode;
         // $location->user_id = auth()->user()->id;

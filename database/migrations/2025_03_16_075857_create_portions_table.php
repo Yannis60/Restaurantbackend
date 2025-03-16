@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurants', function (Blueprint $table) {
+        Schema::create('portions', function (Blueprint $table) {
             $table->id();
-            $table->String("name");
-            $table->String("description", 1000)->nullable();
-            $table->string('restaurant_photo')->nullable();
-            $table->unsignedBigInteger('location_id');
+            $table->string("name");
+            $table->double("quantity");
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('location_id')->references('id')->on('locations');
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('portions');
     }
 };

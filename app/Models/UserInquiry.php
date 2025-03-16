@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Location extends Model
-{
+class UserInquiry extends Model
+{    
     use SoftDeletes;
-    
+
     protected $fillable = [
-        'name',
-        'areaCode',
+        'fullname',
+        'email',
+        'subject',
+        'inquiry_type_id',
+        'message',
     ];
 }

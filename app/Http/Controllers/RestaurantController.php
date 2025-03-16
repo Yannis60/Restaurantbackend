@@ -13,13 +13,22 @@ class RestaurantController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'location_id' => 'required|integer|exists:locations,id'
+            'location_id' => 'required|integer|exists:locations,id',
+            'restaurant_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $restaurant = new Restaurant;
+        $restaurant = new Restaurant();
         $restaurant->name = $request->name;
         $restaurant->description = $request->description;
         $restaurant->location_id = $request->location_id;
+        
+        if ($request->hasFile('restaurant_photo')) {
+            $filename = $request->file('restaurant_photo')->store('restaurants', 'public');
+        } else {
+            $filename = Null;
+        }
+
+        $restaurant->user_photo = $filename;
         $restaurant->save();
 
         $restaurantCheck = Restaurant::find($restaurant->id);
@@ -57,7 +66,8 @@ class RestaurantController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'location_id' => 'required|integer|exists:locations,id'
+            'location_id' => 'required|integer|exists:locations,id',
+            'restaurant_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         try {
             $existingRestaurant = Restaurant::findOrFail($id);
@@ -65,6 +75,14 @@ class RestaurantController extends Controller
                 $existingRestaurant->name = $request->name;
                 $existingRestaurant->description = $request->description;
                 $existingRestaurant->location_id = $request->location_id;
+
+                if ($request->hasFile('restaurant_photo')) {
+                    $filename = $request->file('restaurant_photo')->store('restaurants', 'public');
+                } else {
+                    $filename = Null;
+                }
+
+                $existingRestaurant->user_photo = $filename;
                 $existingRestaurant->save();
 
                 return response()->json($existingRestaurant);
@@ -82,7 +100,7 @@ class RestaurantController extends Controller
     {
         try {
             $existingRestaurant = Restaurant::findOrFail($id);
-            if ($existingRestaurant) {                
+            if ($existingRestaurant) {
                 $existingRestaurant->delete();
                 return response()->json([
                     "deleted" => $existingRestaurant

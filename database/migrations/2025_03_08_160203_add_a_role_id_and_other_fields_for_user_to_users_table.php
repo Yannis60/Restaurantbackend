@@ -15,7 +15,9 @@ return new class extends Migration
             
             $table->string('user_photo')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->foreignId('role_id')->constrained('roles');
+            $table->unsignedBigInteger('role_id');
+
+            $table->foreign('role_id')->references('id')->on('roles');
 
         });
     }

@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurants', function (Blueprint $table) {
+        Schema::create('user_inquiries', function (Blueprint $table) {
             $table->id();
-            $table->String("name");
-            $table->String("description", 1000)->nullable();
-            $table->string('restaurant_photo')->nullable();
-            $table->unsignedBigInteger('location_id');
+            $table->string("fullname");
+            $table->string("email");
+            $table->string("subject");
+            $table->string("message");
+            $table->unsignedBigInteger("user_inquiry_type_id");
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('location_id')->references('id')->on('locations');
+            $table->foreign('user_inquiry_type_id')->references('id')->on('user_inquiry_types');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('user_inquiries');
     }
 };
