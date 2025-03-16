@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('servings', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('serving_date');
+            $table->string('status');
+            $table->string('remarks');
+            $table->unsignedBigInteger('ordering_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('ordering_id')->references('id')->on('orderings');
         });
     }
 

@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('orderings', function (Blueprint $table) {
             $table->id();
             $table->dateTime('ordering_date');
-            $table->unsignedBigInteger('ordering_date');
-            $table->dateTime('ordering_date');
-            $table->dateTime('ordering_date');
-            $table->dateTime('ordering_date');
+            $table->unsignedBigInteger('menu_id');
+            $table->unsignedBigInteger('table_space_id');
+            $table->double('amount');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('menu_id')->references('id')->on('menus');
+            $table->foreign('table_space_id')->references('id')->on('table_spaces');
         });
     }
 
